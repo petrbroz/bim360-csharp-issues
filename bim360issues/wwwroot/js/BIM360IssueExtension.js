@@ -195,6 +195,20 @@ Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', B
 function BIM360IssuePanel(viewer, container, id, title, options) {
   this.viewer = viewer;
   Autodesk.Viewing.UI.PropertyPanel.call(this, container, id, title, options);
+
+  // Override the height offset (originally 70px) of PropertyPanel's scroll container
+  this.scrollContainer.style.height = 'calc(100% - 100px)';
+  // Add a div with custom UI below the scroll container
+  const controlsContainer = document.createElement('div');
+  controlsContainer.classList.add('docking-panel-container-solid-color-a');
+  controlsContainer.style.height = '30px';
+  controlsContainer.style.padding = '4px';
+  const customButton = document.createElement('button');
+  customButton.innerText = 'Custom Button';
+  customButton.style.color = 'black';
+  customButton.addEventListener('click', function(ev) { alert(ev.type); });
+  controlsContainer.appendChild(customButton);
+  this.container.appendChild(controlsContainer);
 }
 BIM360IssuePanel.prototype = Object.create(Autodesk.Viewing.UI.PropertyPanel.prototype);
 BIM360IssuePanel.prototype.constructor = BIM360IssuePanel;
